@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.4'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id 'com.google.protobuf' version "0.9.4"
+}
+
+group = 'com.manage.bookstore'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'net.devh:grpc-client-spring-boot-starter:2.15.0.RELEASE'
+	implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.5.5.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
+}
+
+protobuf {
+	protoc {
+		artifact = "com.google.protobuf:protoc:3.14.0"
+	}
+	plugins {
+		grpc {
+			artifact = 'io.grpc:protoc-gen-grpc-java:1.39.0'
+		}
+	}
+	generateProtoTasks {
+		all()*.plugins {
+			grpc {}
+		}
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
