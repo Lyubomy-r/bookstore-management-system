@@ -44,6 +44,7 @@ http://ec2-52-59-208-61.eu-central-1.compute.amazonaws.com:5020/api/v1/books
 - **Method:** POST
 - **Description:** Saves a new book.
 - **Request Body: Mono\<BookDTO\>** containing the details of the new book.
+    - **Note**: The `id` field in `BookDTO` is automatically generated and does not need to be provided. 
 - **Returns: Mono\<BookDTO\>** representing the saved book.
 - **Logger Message:** Logs the saving of a new book.
 
@@ -51,7 +52,7 @@ http://ec2-52-59-208-61.eu-central-1.compute.amazonaws.com:5020/api/v1/books
 http://ec2-52-59-208-61.eu-central-1.compute.amazonaws.com:5020/api/v1/books
 - **Endpoint: /api/v1/books**
 - **Method:** PATCH
-- **Description:** Updates fields of an existing book.
+- **Description:** Updates fields of an existing book. The method can change one field or multiple fields simultaneously. The main requirement is that the `id` field must be filled.
 - **Request Body: Mono\<BookDTO\>** containing the updated details of the book.
 - **Returns: Mono\<BookDTO\>** representing the updated book.
 - **Logger Message:** Logs the updating of book fields.
@@ -66,6 +67,14 @@ http://ec2-52-59-208-61.eu-central-1.compute.amazonaws.com:5020/api/v1/books/446
 - **Returns: Mono\<String\>** containing a message confirming the deletion.
 - **Logger Message:** Logs the deletion of a book by ID.
 
+## BookDTO
+- **Fields**:
+    - `id` (UUID)
+    - `title` (String)
+    - `author` (String)
+    - `isbn` (String)
+    - `quantity` (Integer)
+  
 ## Validation in BookDTO
 The BookDTO class includes validation annotations to ensure data integrity when saving a new book. Here are the validations applied:
 
